@@ -1,0 +1,97 @@
+//Day 8 of Daily Tiny Programming
+//A simple to-do list CLI application using JavaScript
+const readline = require('readline');
+const fs = require('fs');
+const path = require('path');
+const todoFilePath = path.join(__dirname, 'todo.json');
+let todoList = [];
+// Load existing to-do list from file
+if (fs.existsSync(todoFilePath)) {
+
+    const data = fs.readFileSync(todoFilePath, 'utf8');
+    todoList = JSON.parse(data);
+}         
+const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+}); 
+const saveTodoList = () => {
+    fs.writeFileSync(todoFilePath, JSON.stringify(todoList, null, 2));
+}   
+const showMenu = () => {
+    console.log('\nTo-Do List Application');
+    console.log('1. View To-Do List');
+    console.log('2. Add To-Do Item');       
+    console.log('3. Remove To-Do Item');
+    console.log('4. Exit');
+    rl.question('Choose an option: ', (answer) => {
+        switch (answer.trim()) {
+            case '1':
+                viewTodoList();
+                break;
+            case '2':
+                addTodoItem();
+                break;
+            case '3':
+                removeTodoItem();
+                break;
+            case '4':
+                rl.close();
+                break;
+            default:
+                console.log('Invalid option. Please try again.');
+                showMenu();
+        }
+    });
+};
+const viewTodoList = () => {
+    if (todoList.length === 0) {
+        console.log('\nYour to-do list is empty.');
+    }
+    else {
+        console.log('\nYour To-Do List:');
+        todoList.forEach((item, index) => {
+            console.log(`${index + 1}. ${item}`);
+        });
+    }
+    showMenu();
+};
+const addTodoItem = () => {
+    rl.question('Enter a new to-do item: ', (item) => {
+        if (item.trim()) {
+            todoList.push(item.trim());
+            saveTodoList();
+            console.log(`'${item.trim()}' has been added to your to-do list.`);
+        }   
+        else {
+            console.log('To-do item cannot be empty.');
+        }   
+        showMenu();
+    });
+};  
+const removeTodoItem = () => {
+    if (todoList.length === 0) {
+        console.log('\nYour to-do list is empty.');
+        showMenu();
+        return;
+    }   
+    viewTodoList();
+    rl.question('Enter the number of the item to remove: ', (number) => {
+        const index = parseInt(number.trim(), 10) - 1;
+        if (!isNaN(index) && index >= 0 && index < todoList.length) {
+            const removedItem = todoList.splice(index, 1);
+            saveTodoList();
+            console.log(`'${removedItem}' has been removed from your to-do list.`);
+        }   
+        else {
+            console.log('Invalid number. Please try again.');
+        }       
+        showMenu();
+    });
+};
+showMenu();
+// Start the application
+rl.on('close', () => {
+    console.log('\nExiting To-Do List Application. Goodbye!');
+    process.exit(0);
+}); 
