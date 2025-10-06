@@ -1,4 +1,4 @@
-//Day 10 of Daily Tiny Programming
+//Day 11 of Daily Tiny Programming
 //Using Bird API to get bird data
 const fetch = require('node-fetch');
 const API_URL = 'https://api.ebird.org/v2/ref/taxonomy/ebird?fmt=json';
