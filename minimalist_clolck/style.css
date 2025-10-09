@@ -1,0 +1,16 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #1a1a1a; /* Dark background */
+    color: #00ff80; /* Bright, easy-to-read text */
+    font-family: monospace;
+}
+
+#clock {
+    font-size: 8rem; /* Large text */
+    font-weight: bold;
+    text-shadow: 0 0 10px rgba(0, 255, 128, 0.5); /* Slight glow */
+}
