@@ -1,0 +1,25 @@
+img {
+    position: absolute;
+    width: 320px;
+    height: 180px;
+    mix-blend-mode: multiply;
+}
+img:last-child { animation: fader 1s infinite alternate; }
+@keyframes fader { to { opacity: 0; } }
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #ffffff; /* Dark background */
+    color: #a86ab0; /* Bright, easy-to-read text */
+    font-family: monospace;
+}
+
+#clock {
+    font-size: 8rem; /* Large text */
+    font-weight: bold;
+    text-shadow: 0 0 10px rgba(248, 17, 237, 0.753); /* Slight glow */
+}
